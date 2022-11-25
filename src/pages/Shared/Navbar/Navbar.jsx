@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import Logo from '../../../assets/logo/wristwatch.png'
+import { AuthContext } from '../../../contexts/AuthProvider';
 const Navbar = () => {
+    const { logout } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logout()
+            .then(() => { })
+            .catch(e => console.log(e))
+    }
     const navItem = <>
         <li><Link to='/home'>Home</Link></li>
         <li><Link to='/Blog'>Blog</Link></li>
@@ -34,6 +42,7 @@ const Navbar = () => {
             <div className="navbar-end space-x-2">
                 <Link to='/login'><Button>Login</Button></Link>
                 <Link to='/signUp'><Button>Sign up</Button></Link>
+                <button onClick={handleLogout} className='btn btn-md'>Logout</button>
             </div>
         </div>
     );

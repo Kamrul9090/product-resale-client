@@ -28,7 +28,7 @@ const Login = () => {
     }
     return (
         <div>
-            <div className='w-1/2 text-center mx-auto mt-28'>
+            <div className='w-1/2 text-center mx-auto my-28'>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 lg:w-1/2 mx-auto">
                     <div className='className="form-control w-full max-w-xs'>
                         <label className="label">
