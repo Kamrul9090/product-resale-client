@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import categoriesImg from '../../../assets/img/categories.png'
+import Category from './Category';
 
 
 const WatchCategories = () => {
@@ -10,11 +11,10 @@ const WatchCategories = () => {
         queryKey: ['categories'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/categories`);
-            const data = res.json();
+            const data = await res.json();
             return data;
         }
     })
-    console.log(categories);
     return (
         <div>
             <div className='my-20 bg-slate-400 p-14'>
@@ -25,14 +25,9 @@ const WatchCategories = () => {
                 <h1 className='text-xl lg:text-3xl font-bold mb-10'>Select your Category</h1>
                 <div className='flex flex-col items-center gap-10 mb-10 lg:flex-row justify-around'>
                     {
-                        categories.map(category => <Link to={`/category/${category._id}`}>
-                            <div className="card w-60 h-32 shadow-xl image-full">
-                                <figure><img className='w-full' src={category.picture} alt="Shoes" /></figure>
-                                <div className="card-body flex items-center justify-center">
-                                    <h2 className="card-title text-white hover:text-primary underline">{category?.name}</h2>
-                                </div>
-                            </div>
-                        </Link>)
+                        categories.map(category =>
+                            <Category key={category._id} category={category}></Category>
+                        )
                     }
                 </div>
             </div>

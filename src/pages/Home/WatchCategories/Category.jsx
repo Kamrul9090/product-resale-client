@@ -1,53 +1,17 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Category = () => {
-    const data = [
-        {
-            "categoryName": "watch",
-            "category": [
-                {
-                    "_id": "6380baabcf08d3b64ab9ced4",
-                    "index": 0,
-                    "name": "Gwen Greene",
-                    "picture": "http://placehold.it/32x32",
-                    "resalePrice": "$20.28",
-                    "originalPrice": "$30",
-                    "uses": 2,
-                    "registered": "01-02-2022",
-                    "isActive": "verify",
-                    "sellerName": "MR. Rakib"
-                },
-                {
-                    "_id": "6380baabcf08d3b64ab9ced4",
-                    "index": 0,
-                    "name": "Gwen Greene",
-                    "picture": "http://placehold.it/32x32",
-                    "resalePrice": "$20.28",
-                    "originalPrice": "$30",
-                    "uses": 2,
-                    "registered": "01-02-2022",
-                    "isActive": "verify",
-                    "sellerName": "MR. Rakib"
-                },
-                {
-                    "_id": "6380baabcf08d3b64ab9ced4",
-                    "index": 0,
-                    "name": "Gwen Greene",
-                    "picture": "http://placehold.it/32x32",
-                    "resalePrice": "$20.28",
-                    "originalPrice": "$30",
-                    "uses": 2,
-                    "registered": "01-02-2022",
-                    "isActive": "verify",
-                    "sellerName": "MR. Rakib"
-                }
-            ]
-        }
-    ]
+const Category = ({ category }) => {
+    const { _id } = category;
+
     return (
-        <div>
-
-        </div>
+        <Link to={`/category/${_id}`}>
+            <div className="card w-60 h-32 shadow-xl image-full">
+                <figure><img className='w-full' src={category.picture} alt="Shoes" /></figure>
+                <div className="card-body flex items-center justify-center">
+                    <h2 className="card-title text-white hover:text-primary underline">{category?.name}</h2>
+                </div>
+            </div>
+        </Link>
     );
 };
 

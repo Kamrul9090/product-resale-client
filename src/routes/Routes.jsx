@@ -4,6 +4,7 @@ import Main from "../layout/Main";
 import Blog from "../pages/Blog/Blog";
 import Home from '../pages/Home/Home/Home'
 import Category from "../pages/Home/WatchCategories/Category";
+import LoadCategoryData from "../pages/Home/WatchCategories/LoadCategoryData/LoadCategoryData";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/Login/SignUp/SignUp";
 export const routers = createBrowserRouter([
@@ -26,7 +27,8 @@ export const routers = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                element: <Category></Category>
+                element: <LoadCategoryData></LoadCategoryData>,
+                loader: ({ params }) => fetch(`http://localhost:5000/category/${params.id}`)
             },
             {
                 path: '/signUp',
