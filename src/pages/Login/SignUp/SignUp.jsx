@@ -1,21 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useToken from '../../../hooks/useToken';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUser } = useContext(AuthContext)
+    const [checked, setChecked] = useState(!"checked");
+    const [userEmail, setUserEmail] = useState('');
+    const [token] = useToken(userEmail);
+    const navigate = useNavigate();
 
+    if (token) {
+        navigate('/')
+    }
     const onSubmit = data => {
         console.log(data);
+        // const userData = {
+        //     name: data.name,
+        //     email: data.email,
+        //     select: data.select
+        // }
         if (data.password.length === data.confirmPassword.length) {
             createUser(data.email, data.password)
                 .then(result => {
                     const user = result.user;
                     updateUser(data.name)
                         .then(() => {
-                            toast.success('Sign Up successful')
+                            console.log(user);
+                            toast.success('Sign Up successful');
+                            saveUser(data.name, data.email, data.select)
                         })
                         .catch(error => console.error(error))
                 })
@@ -23,6 +38,37 @@ const SignUp = () => {
         }
 
     }
+
+    const handleCheck = () => {
+        setChecked(!checked)
+    }
+
+
+    const saveUser = (name, email, select) => {
+        const user = { name, email, select };
+        fetch(`http://localhost:5000/users`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(result => {
+                setUserEmail(email)
+            });
+    }
+
+    // const getAccessToken = email => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.accessToken) {
+    //                 localStorage.setItem('accessToken', data.accessToken)
+    //             }
+    //         })
+    // }
+
     return (
         <div className='w-full lg:w-1/2 mx-auto mt-28'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-1/2 mx-auto">
@@ -59,7 +105,18 @@ const SignUp = () => {
                     <input type='password' {...register("confirmPassword")} placeholder="confirmPassword" className="input input-bordered w-full" required /> <br />
                     {errors?.password?.length !== errors?.confirmPassword?.length && <small>Invalid password</small>}
                 </div>
-                <input className='btn btn-md w-full' type="submit" value='create an account' />
+                <div className='className="form-control w-full max-w-xs'>
+                    <label className="label">
+                        <span className="label-text">Select</span>
+                    </label>
+                    <select {...register("select")} className="select select-bordered w-full max-w-xs">
+                        <option selected>Buyer</option>
+                        <option>Seller</option>
+                    </select>
+                </div>
+                <p className='flex font-semibold text-primary'>Checked <input type="checkbox" onClick={handleCheck} checked={checked} className="checkbox ml-2" /></p>
+                <input className='btn btn-md w-full' type="submit" value='create an account' disabled={!checked} />
+
                 <p className='font-semibold text-center'><small>Already have an account? please</small> <Link to='/login' className='underline text-primary'>Login</Link></p>
             </form>
         </div>

@@ -1,19 +1,33 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
+import useToken from '../../hooks/useToken';
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn, loginWithGoogle } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [token] = useToken(userEmail);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    if (token) {
+        navigate(from, { replace: true })
+    }
     const onSubmit = data => {
         console.log(data);
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                toast.success('Login successful')
+                console.log(user);
+                if (user) {
+                    setUserEmail(data.email)
+                    toast.success('Login successful')
+                }
             })
             .catch(e => setLoginError(e.message));
     }
@@ -26,6 +40,17 @@ const Login = () => {
             })
             .catch(e => console.error(e))
     }
+
+    // const getAccessToken = email => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.accessToken) {
+    //                 localStorage.setItem('accessToken', data.accessToken)
+    //                 navigate(from, { replace: true })
+    //             }
+    //         })
+    // }
     return (
         <div>
             <div className='w-1/2 text-center mx-auto my-28'>

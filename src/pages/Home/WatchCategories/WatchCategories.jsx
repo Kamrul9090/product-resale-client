@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import categoriesImg from '../../../assets/img/categories.png'
 import Category from './Category';
 
@@ -15,6 +16,10 @@ const WatchCategories = () => {
             return data;
         }
     })
+
+    if (isLoading) {
+        return <ClipLoader></ClipLoader>
+    }
     return (
         <div>
             <div className='my-20 bg-slate-400 p-14'>
