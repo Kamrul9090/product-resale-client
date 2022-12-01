@@ -17,6 +17,7 @@ const Payment = () => {
     return (
         <div>
             <p className='font-semibold'>Please payment <strong>${price}</strong> for <b><i>{name}</i></b></p>
+
         </div>
     );
 };
