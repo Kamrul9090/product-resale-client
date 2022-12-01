@@ -6,8 +6,7 @@ import { ClipLoader } from 'react-spinners';
 const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
     const { user, loader } = useContext(AuthContext);
     const { email } = user;
-    const { name: watchName, picture } = categoryWatchData;
-    console.log(categoryWatchData);
+    const { name: watchName, picture, resalePrice } = categoryWatchData;
     const imageHostKey = process.env.REACT_APP_image_bb_key;
     if (loader) {
         return <ClipLoader></ClipLoader>
@@ -37,6 +36,7 @@ const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
                         email: email,
                         location: location,
                         phone: phone,
+                        price: resalePrice,
                         image: data.data.url
                     }
                     fetch(`http://localhost:5000/bookings`, {

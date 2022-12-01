@@ -3,8 +3,6 @@ import { HiCheck } from "react-icons/hi";
 const CategoryCard = ({ categoryWatch, setCategoryWatchData }) => {
     // const [open, setOpen] = useState(true);
     const { name, picture, registered, originalPrice, resalePrice, uses, isActive, sellerName, location } = categoryWatch;
-    console.log(categoryWatch);
-    console.log(registered);
     return (
         <div>
             <div className="card h-full bg-base-100 shadow-2xl">

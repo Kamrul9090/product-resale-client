@@ -7,6 +7,7 @@ import AllBuyer from "../pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../pages/Dashboard/AllSeller/AllSeller";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
+import Payment from "../pages/Dashboard/MyOrders/Payment";
 import MyProducts from "../pages/Dashboard/MyProducts/MyProducts";
 import Users from "../pages/Dashboard/Users/Users";
 import Home from '../pages/Home/Home/Home'
@@ -54,8 +55,17 @@ export const routers = createBrowserRouter([
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
             {
+                path: '/dashboard',
+                element: <MyOrders></MyOrders>
+            },
+            {
                 path: '/dashboard/myOrders',
                 element: <MyOrders></MyOrders>
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <Payment></Payment>,
+                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
             },
             {
                 path: '/dashboard/addProducts',

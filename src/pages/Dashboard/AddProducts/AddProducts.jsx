@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../../contexts/AuthProvider';
 
 const AddProducts = () => {
     const { register, handleSubmit, reset } = useForm();
     const imageHostKey = process.env.REACT_APP_image_bb_key;
-
+    const { user } = useContext(AuthContext);
     const onSubmit = data => {
         const image = data.image[0];
         const formData = new FormData();
@@ -24,6 +25,7 @@ const AddProducts = () => {
                         price: data.price,
                         location: data.location,
                         phone: data.phone,
+                        email: user.email,
                         purchase: data.purchase,
                         select: data.select,
                         image: imageData.data.url,

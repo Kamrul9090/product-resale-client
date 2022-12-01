@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import OrderCard from './OrderCard';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
@@ -14,13 +15,15 @@ const MyOrders = () => {
             return data;
         }
     })
-    console.log(userBookings);
+
     if (isLoading) {
         return <ClipLoader></ClipLoader>
     }
     return (
-        <div>
-
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-10'>
+            {
+                userBookings.map(booking => <OrderCard key={booking._id} booking={booking}></OrderCard>)
+            }
         </div>
     );
 };

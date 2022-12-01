@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const ProductTable = ({ allSellerProducts, handleDeleteProduct }) => {
+const ProductTable = ({ allSellerProducts, handleDeleteProduct, advertisedProduct }) => {
 
 
     return (
@@ -32,7 +32,7 @@ const ProductTable = ({ allSellerProducts, handleDeleteProduct }) => {
                             <td>{product.location}</td>
                             <td>{product.price}</td>
                             <td>{product.phone}</td>
-                            <td><button className="btn btn-sm btn-primary">add</button></td>
+                            <td><button onClick={() => advertisedProduct(product)} className="btn btn-sm btn-primary">add</button></td>
                             <td><button onClick={() => handleDeleteProduct(product)} className='btn btn-sm btn-danger'>Delete</button></td>
                         </tr>)
                     }
