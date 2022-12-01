@@ -6,8 +6,9 @@ import { ClipLoader } from 'react-spinners';
 const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
     const { user, loader } = useContext(AuthContext);
     const { email } = user;
-    const { name: watchName, registered } = categoryWatchData;
-    console.log(registered);
+    const { name: watchName, picture } = categoryWatchData;
+    console.log(categoryWatchData);
+    const imageHostKey = process.env.REACT_APP_image_bb_key;
     if (loader) {
         return <ClipLoader></ClipLoader>
     }
@@ -18,33 +19,49 @@ const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
         const email = form.email.value;
         const location = form.location.value;
         const phone = form.phone.value;
-        console.log(categoryName);
-        const booking = {
-            name: categoryName,
-            email: email,
-            location: location,
-            phone: phone
-        }
-        console.log(booking);
+        const image = picture;
+        const formData = new FormData()
+        formData.append('image', image);
 
-        fetch(`http://localhost:5000/bookings`, {
+        fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
             method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(booking)
+            body: formData
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.acknowledged) {
-                    toast.success('Booking confirm')
-                    form.target = '';
-                    setCategoryWatchData(null)
-                } else {
-                    toast.error(`${data.message}`)
+                if (data.success) {
+                    // ------------
+                    const booking = {
+                        name: categoryName,
+                        email: email,
+                        location: location,
+                        phone: phone,
+                        image: data.data.url
+                    }
+                    fetch(`http://localhost:5000/bookings`, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(booking)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data)
+                            if (data.acknowledged) {
+                                toast.success('Booking confirm')
+                                form.target = '';
+                                setCategoryWatchData(null)
+                            } else {
+                                toast.error(`${data.message}`)
+                            }
+                        })
+                    // --------------
                 }
             })
+
+
     }
 
 
@@ -56,7 +73,7 @@ const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
                     <label htmlFor="watchBooing" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">Please Booking</h3>
                     <form onSubmit={handleBookingData} className='my-5 space-y-4'>
-                        <input name='name' defaultValue={watchName} disabled type="text" className="input input-bordered w-full" />
+                        <input name='name' value={watchName} disabled type="text" className="input input-bordered w-full" />
                         <input name='email' defaultValue={email} disabled type="text" className="input input-bordered w-full" />
                         <input placeholder='location' name='location' type="text" className="input input-bordered w-full" />
                         <input placeholder='number' type="text" name='phone' className="input input-bordered w-full" />

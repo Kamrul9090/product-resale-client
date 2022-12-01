@@ -24,7 +24,6 @@ const LoadCategoryData = () => {
         }
     })
 
-    console.log(watchData);
 
     if (isLoading) {
         return <ClipLoader></ClipLoader>
