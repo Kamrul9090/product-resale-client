@@ -1,18 +1,37 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 
 const AllBuyer = () => {
 
-    const { data: allBuyers = [], isLoading } = useQuery({
+    const { data: allBuyers = [], isLoading, refetch } = useQuery({
         queryKey: ['allBuyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allBuyers`)
+            const res = await fetch(`http://localhost:5000/allBuyers`, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = res.json();
             return data;
         }
     })
-    console.log(allBuyers);
+    const handleDelete = (buyer) => {
+        fetch(`http://localhost:5000/users/${buyer._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    toast.success('Delete success');
+                    refetch()
+                }
+            })
+    }
     if (isLoading) {
         return <ClipLoader></ClipLoader>
     }
@@ -22,20 +41,23 @@ const AllBuyer = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Index</th>
                             <th>Name</th>
-                            <th>Role</th>
-                            <th>Favorite Color</th>
+                            <th>Email</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            allBuyers.map((buyer, i) => <tr>
-                                <th>{1 + i}</th>
-                                <td>{buyer.name}</td>
-                                <td>{buyer.select}</td>
-                                <td><button className='btn btn-xs btn-warning'>Delete</button></td>
-                            </tr>)
+                            allBuyers.length > 0 ?
+                                allBuyers.map((buyer, i) => <tr>
+                                    <th>{1 + i}</th>
+                                    <td>{buyer.name}</td>
+                                    <td>{buyer.email}</td>
+                                    <td><button onClick={() => handleDelete(buyer)} className='btn btn-xs btn-warning'>Delete</button></td>
+                                </tr>)
+                                :
+                                <h1>No Buyer register yet!!!</h1>
                         }
                     </tbody>
                 </table>

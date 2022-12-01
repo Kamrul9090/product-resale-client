@@ -12,6 +12,7 @@ import Home from '../pages/Home/Home/Home'
 import LoadCategoryData from "../pages/Home/WatchCategories/LoadCategoryData/LoadCategoryData";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/Login/SignUp/SignUp";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 export const routers = createBrowserRouter([
     {
@@ -60,15 +61,15 @@ export const routers = createBrowserRouter([
             },
             {
                 path: '/dashboard/allBuyer',
-                element: <AllBuyer></AllBuyer>
+                element: <AdminRoute><AllBuyer></AllBuyer></AdminRoute>
             },
             {
                 path: '/dashboard/allSeller',
-                element: <AllSeller></AllSeller>
+                element: <AdminRoute><AllSeller></AllSeller></AdminRoute>
             },
             {
                 path: '/dashboard/users',
-                element: <Users></Users>
+                element: <AdminRoute><Users></Users></AdminRoute>
             },
         ]
     }

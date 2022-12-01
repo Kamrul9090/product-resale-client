@@ -7,7 +7,11 @@ const Users = () => {
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`)
+            const res = await fetch(`http://localhost:5000/users`, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = res.json();
             return data;
         }
@@ -16,7 +20,9 @@ const Users = () => {
     const handleAdmin = id => {
         fetch(`http://localhost:5000/users/admin/${id}`, {
             method: 'PUT',
-            authorization: `bearer ${localStorage.getItem('accessToken')}`
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -25,6 +31,23 @@ const Users = () => {
                 refetch()
             })
     }
+
+    const handleDelete = (user) => {
+        fetch(`http://localhost:5000/users/${user._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    toast.success('Delete success');
+                    refetch()
+                }
+            })
+    }
+
 
     if (isLoading) {
         return <ClipLoader></ClipLoader>
@@ -35,7 +58,7 @@ const Users = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Index</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>User Role</th>
@@ -58,6 +81,7 @@ const Users = () => {
                                     :
                                     <button className='btn btn-sm btn-secondary' disabled>Admin</button>
                                 }</td>
+                                <td><button onClick={() => handleDelete(user)} className='btn btn-xs btn-info'>Delete</button></td>
                             </tr>)
                         }
                     </tbody>
