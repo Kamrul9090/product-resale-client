@@ -17,11 +17,6 @@ const SignUp = () => {
     }
     const onSubmit = data => {
         console.log(data);
-        // const userData = {
-        //     name: data.name,
-        //     email: data.email,
-        //     select: data.select
-        // }
         if (data.password.length === data.confirmPassword.length) {
             createUser(data.email, data.password)
                 .then(result => {
@@ -42,7 +37,6 @@ const SignUp = () => {
     const handleCheck = () => {
         setChecked(!checked)
     }
-
 
     const saveUser = (name, email, select) => {
         const user = { name, email, select };
@@ -107,14 +101,15 @@ const SignUp = () => {
                 </div>
                 <div className='className="form-control w-full max-w-xs'>
                     <label className="label">
-                        <span className="label-text">Select</span>
+                        <span className="label-text">select</span>
                     </label>
                     <select {...register("select")} className="select select-bordered w-full max-w-xs">
                         <option selected>Buyer</option>
                         <option>Seller</option>
                     </select>
                 </div>
-                <p className='flex font-semibold text-primary'>Checked <input type="checkbox" onClick={handleCheck} checked={checked} className="checkbox ml-2" /></p>
+                <p className='flex font-semibold text-primary'><Link to='/termsAndConditions'><small className='underline'>Accept out terms and conditions</small></Link><input type="checkbox" onClick={handleCheck} checked={checked} className="checkbox ml-2" /></p>
+
                 <input className='btn btn-md w-full' type="submit" value='create an account' disabled={!checked} />
 
                 <p className='font-semibold text-center'><small>Already have an account? please</small> <Link to='/login' className='underline text-primary'>Login</Link></p>

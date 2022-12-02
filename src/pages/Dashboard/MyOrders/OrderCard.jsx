@@ -17,7 +17,7 @@ const OrderCard = ({ booking }) => {
                         <Link to={`/dashboard/payment/${_id}`}><button className="btn btn-primary">Pay Now</button></Link>
                     }
                     {
-                        price && booking?.paid && <span>paid done</span>
+                        price && booking?.paid && <span className='font-semibold text-orange-700'>paid done</span>
                     }
                 </div>
             </div>

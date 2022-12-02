@@ -14,6 +14,7 @@ import Home from '../pages/Home/Home/Home'
 import LoadCategoryData from "../pages/Home/WatchCategories/LoadCategoryData/LoadCategoryData";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/Login/SignUp/SignUp";
+import Terms from "../pages/Login/SignUp/Terms";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRoute from './SellerRoute';
@@ -49,6 +50,10 @@ export const routers = createBrowserRouter([
                 element: <Login></Login>
             }
         ]
+    },
+    {
+        path: '/termsAndConditions',
+        element: <Terms></Terms>
     },
     {
         path: '/dashboard',
