@@ -6,6 +6,7 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import useToken from '../../../hooks/useToken';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [SignUpError, setSignUpError] = useState('');
     const { createUser, updateUser } = useContext(AuthContext)
     const [checked, setChecked] = useState(!"checked");
     const [userEmail, setUserEmail] = useState('');
@@ -27,9 +28,13 @@ const SignUp = () => {
                             toast.success('Sign Up successful');
                             saveUser(data.name, data.email, data.select)
                         })
-                        .catch(error => console.error(error))
+                        .catch(error => {
+                            setSignUpError(error.message)
+                        })
                 })
-                .catch(error => console.error(error))
+                .catch(error => {
+                    setSignUpError(error.message)
+                })
         }
 
     }
@@ -100,7 +105,10 @@ const SignUp = () => {
                 <p className='flex font-semibold text-primary'><Link to='/termsAndConditions'><small className='underline'>Accept out terms and conditions</small></Link><input type="checkbox" onClick={handleCheck} checked={checked} className="checkbox ml-2" /></p>
 
                 <input className='btn btn-md w-full' type="submit" value='create an account' disabled={!checked} />
-
+                {
+                    SignUpError &&
+                    <p className='text-red-600 font-semibold'>{SignUpError}</p>
+                }
                 <p className='font-semibold text-center'><small>Already have an account? please</small> <Link to='/login' className='underline text-primary'>Login</Link></p>
             </form>
         </div>
