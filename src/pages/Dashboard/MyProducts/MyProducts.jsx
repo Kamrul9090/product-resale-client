@@ -11,7 +11,7 @@ const MyProducts = () => {
     const { data: allSellerProducts = [], isLoading, refetch } = useQuery({
         queryKey: ["products", email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products?email=${email}`)
+            const res = await fetch(`https://resale-server-lilac.vercel.app/products?email=${email}`)
             const data = await res.json();
             return data;
         }
@@ -19,7 +19,7 @@ const MyProducts = () => {
 
     const handleDeleteProduct = product => {
         console.log(product._id);
-        fetch(`http://localhost:5000/products/${product._id}`, {
+        fetch(`https://resale-server-lilac.vercel.app/products/${product._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())
@@ -31,7 +31,7 @@ const MyProducts = () => {
     }
 
     const advertisedProduct = product => {
-        fetch(`http://localhost:5000/products/${product._id}`, {
+        fetch(`https://resale-server-lilac.vercel.app/products/${product._id}`, {
             method: 'PUT',
         })
             .then(res => res.json())

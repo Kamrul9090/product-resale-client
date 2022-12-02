@@ -40,7 +40,7 @@ const SignUp = () => {
 
     const saveUser = (name, email, select) => {
         const user = { name, email, select };
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://resale-server-lilac.vercel.app/users`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -52,17 +52,6 @@ const SignUp = () => {
                 setUserEmail(email)
             });
     }
-
-    // const getAccessToken = email => {
-    //     fetch(`http://localhost:5000/jwt?email=${email}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.accessToken) {
-    //                 localStorage.setItem('accessToken', data.accessToken)
-    //             }
-    //         })
-    // }
-
     return (
         <div className='w-full lg:w-1/2 mx-auto mt-28'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-1/2 mx-auto">

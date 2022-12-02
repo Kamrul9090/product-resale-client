@@ -39,7 +39,7 @@ export const routers = createBrowserRouter([
             {
                 path: '/category/:id',
                 element: <PrivateRoute><LoadCategoryData></LoadCategoryData></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/category/${params.id}`)
+                loader: ({ params }) => fetch(`https://resale-server-lilac.vercel.app/category/${params.id}`)
             },
             {
                 path: '/signUp',
@@ -70,7 +70,7 @@ export const routers = createBrowserRouter([
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
+                loader: ({ params }) => fetch(`https://resale-server-lilac.vercel.app/bookings/${params.id}`)
             },
             {
                 path: '/dashboard/addProducts',

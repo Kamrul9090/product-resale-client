@@ -8,7 +8,7 @@ const AllBuyer = () => {
     const { data: allBuyers = [], isLoading, refetch } = useQuery({
         queryKey: ['allBuyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allBuyers`, {
+            const res = await fetch(`https://resale-server-lilac.vercel.app/allBuyers`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
@@ -18,7 +18,7 @@ const AllBuyer = () => {
         }
     })
     const handleDelete = (buyer) => {
-        fetch(`http://localhost:5000/users/${buyer._id}`, {
+        fetch(`https://resale-server-lilac.vercel.app/users/${buyer._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

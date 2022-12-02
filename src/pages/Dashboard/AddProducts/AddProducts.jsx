@@ -32,7 +32,7 @@ const AddProducts = () => {
                         description: data.description
 
                     }
-                    fetch(`http://localhost:5000/addProducts`, {
+                    fetch(`https://resale-server-lilac.vercel.app/addProducts`, {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

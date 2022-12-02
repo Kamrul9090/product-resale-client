@@ -9,7 +9,7 @@ const AdvertiseProducts = () => {
     const { data: advertiseProducts = [], isLoading } = useQuery({
         queryKey: ["advertiseProducts", user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/advertiseProducts?email=${user?.email}`);
+            const res = await fetch(`https://resale-server-lilac.vercel.app/advertiseProducts?email=${user?.email}`);
             const data = await res.json();
             return data;
         }

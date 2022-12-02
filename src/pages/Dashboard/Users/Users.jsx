@@ -7,7 +7,7 @@ const Users = () => {
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users`, {
+            const res = await fetch(`https://resale-server-lilac.vercel.app/users`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
@@ -18,7 +18,7 @@ const Users = () => {
     })
 
     const handleAdmin = id => {
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://resale-server-lilac.vercel.app/users/admin/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -33,7 +33,7 @@ const Users = () => {
     }
 
     const handleDelete = (user) => {
-        fetch(`http://localhost:5000/users/${user._id}`, {
+        fetch(`https://resale-server-lilac.vercel.app/users/${user._id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

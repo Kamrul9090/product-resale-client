@@ -14,7 +14,7 @@ const LoadCategoryData = () => {
     const { data: watchData = [], isLoading } = useQuery({
         queryKey: ['categoryWatchData', index],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/categoryWatchData?index=${index}&email=${user?.email}`, {
+            const res = await fetch(`https://resale-server-lilac.vercel.app/categoryWatchData?index=${index}&email=${user?.email}`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }

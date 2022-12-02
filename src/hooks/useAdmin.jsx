@@ -7,7 +7,7 @@ const useAdmin = email => {
     console.log('email', email);
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5000/users/admin/${email}`, {
+            fetch(`https://resale-server-lilac.vercel.app/users/admin/${email}`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }

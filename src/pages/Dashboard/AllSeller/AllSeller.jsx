@@ -6,7 +6,7 @@ const AllSeller = () => {
     const { data: allSellers = [], isLoading } = useQuery({
         queryKey: ['allSellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allSellers`, {
+            const res = await fetch(`https://resale-server-lilac.vercel.app/allSellers`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
