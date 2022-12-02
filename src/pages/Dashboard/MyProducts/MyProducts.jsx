@@ -26,6 +26,7 @@ const MyProducts = () => {
             .then(data => {
                 if (data.acknowledged) {
                     refetch()
+                    toast.success('Delete successful')
                 }
             })
     }

@@ -54,8 +54,10 @@ const BookModal = ({ categoryWatchData, setCategoryWatchData }) => {
                                 form.target = '';
                                 setCategoryWatchData(null)
                             } else {
+
                                 toast.error(`${data.message}`)
                             }
+
                         })
                     // --------------
                 }
